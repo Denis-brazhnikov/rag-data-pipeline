@@ -1,0 +1,13 @@
+unstructured[all-docs]
+pdfplumber
+beautifulsoup4
+datasketch
+rapidfuzz
+pydantic
+PyYAML
+python-dotenv
+typer
+prefect
+mlflow
+llama-index
+spacy

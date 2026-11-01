@@ -1,0 +1,71 @@
+{
+  "run_id": "20261101_131440",
+  "created_at": "2026-11-01T13:14:40.840523",
+  "config": {
+    "run": {
+      "name": "rag_data_preparation",
+      "seed": 42
+    },
+    "paths": {
+      "input_dir": "data/raw",
+      "output_dir": "data/prepared"
+    },
+    "loader": {
+      "recursive": true,
+      "allowed_extensions": [
+        ".pdf",
+        ".txt",
+        ".html",
+        ".htm",
+        ".md"
+      ],
+      "exclude_hidden": true,
+      "num_files_limit": null
+    },
+    "parser": {
+      "strategy": "fast",
+      "fail_on_error": false
+    },
+    "cleaning": {
+      "min_chars": 12,
+      "boilerplate_patterns": [
+        "cookie|cookies|куки|cookie policy",
+        "подписаться|subscribe|newsletter",
+        "навигация|главное меню|menu",
+        "©|copyright|all rights reserved"
+      ]
+    },
+    "normalization": {
+      "spacy_language": "ru",
+      "unicode_form": "NFKC",
+      "lowercase": false
+    },
+    "deduplication": {
+      "enabled": true,
+      "threshold": 0.9,
+      "num_perm": 128,
+      "shingle_size": 5,
+      "min_tokens": 8
+    },
+    "structuring": {
+      "group_by_section": true
+    },
+    "logging": {
+      "level": "INFO",
+      "mlflow_enabled": true,
+      "mlflow_tracking_uri": "mlruns",
+      "mlflow_experiment": "rag-data-preparation"
+    }
+  },
+  "counts": {
+    "sources_count": 10,
+    "raw_elements_count": 16,
+    "cleaned_elements_count": 12,
+    "unique_elements_count": 11,
+    "prepared_docs_count": 11
+  },
+  "outputs": {
+    "json": "data\\prepared\\dataset.json",
+    "jsonl": "data\\prepared\\dataset.jsonl"
+  }
+}
