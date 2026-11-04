@@ -1,18 +1,18 @@
 import os
-# Разрешаем использование файлового бэкенда (для MLflow 3.13+)
 os.environ["MLFLOW_ALLOW_FILE_STORE"] = "true"
 
 import mlflow
 from src.rag_prep.config import PipelineConfig
 
 class MLflowTracker:
-    def __init__(self, config: PipelineConfig):
+    def __init__(self, config):
         self.config = config
         if self.config.logging.mlflow_enabled:
             mlflow.set_tracking_uri(self.config.logging.mlflow_tracking_uri)
             mlflow.set_experiment(self.config.logging.mlflow_experiment)
 
     def log_run(self, counts: dict, manifest_path: str):
+        """Логирование для пайплайна подготовки данных (Старый метод)"""
         if not self.config.logging.mlflow_enabled:
             return
             
@@ -28,4 +28,25 @@ class MLflowTracker:
                 mlflow.log_metric(key, value)
                 
             mlflow.log_artifact(manifest_path)
-            print("📊 Метрики успешно отправлены в MLflow!")
+            print("📊 Метрики подготовки данных отправлены в MLflow!")
+
+    def log_chunking_run(self, metrics: dict, manifest_path: str):
+        """Логирование для пайплайна чанкинга (Новый метод)"""
+        if not self.config.logging.mlflow_enabled:
+            return
+            
+        with mlflow.start_run(run_name=self.config.run.name):
+            # Берем параметры из нового конфига чанкинга
+            mlflow.log_params({
+                "chunk_size": self.config.chunking.chunk_size,
+                "chunk_overlap": self.config.chunking.chunk_overlap,
+                "chunking_strategy": self.config.chunking.strategy,
+                "tokenizer_model": self.config.chunking.tokenizer_model,
+                "seed": self.config.run.seed
+            })
+            
+            for key, value in metrics.items():
+                mlflow.log_metric(key, value)
+                
+            mlflow.log_artifact(manifest_path)
+            print("📊 Метрики чанкинга отправлены в MLflow!")

@@ -39,3 +39,43 @@ class DocumentMetadata(BaseModel):
 class PreparedDocument(BaseModel):
     text: str
     metadata: DocumentMetadata
+
+    # --- НОВЫЕ МОДЕЛИ ДЛЯ CHUNKING PIPELINE ---
+
+class SemanticBlock(BaseModel):
+    id: str
+    text: str
+    position: int
+    start_char: int
+    end_char: int
+    token_count: int
+    origin_element_ids: List[str] = Field(default_factory=list)
+
+class ChunkMetadata(BaseModel):
+    # Обязательные поля из ТЗ
+    document_id: str
+    position: int
+    chunk_token_count: int
+    chunk_size: int
+    chunk_overlap: int
+    chunking_strategy: str
+    
+    # Дополнительные поля из ТЗ (Lineage и Tracing)
+    source: Optional[str] = None
+    section: Optional[str] = None
+    text_hash: Optional[str] = None
+    parent_ids: List[str] = Field(default_factory=list)
+    
+    # Сложные структуры для attribution
+    lineage: Dict[str, Any] = Field(default_factory=dict)
+    hierarchy: Dict[str, Any] = Field(default_factory=dict)
+    quality: Dict[str, Any] = Field(default_factory=dict)
+    
+    # Offsets для точного цитирования
+    chunk_start_char: int
+    chunk_end_char: int
+    offset_strategy: str = "semantic_block_span"
+
+class PreparedChunk(BaseModel):
+    text: str
+    metadata: ChunkMetadata

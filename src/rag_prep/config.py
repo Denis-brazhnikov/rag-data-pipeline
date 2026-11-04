@@ -65,3 +65,40 @@ def load_config(config_path: str = "config/default.yaml") -> PipelineConfig:
     with open(config_path, "r", encoding="utf-8") as f:
         config_data = yaml.safe_load(f)
     return PipelineConfig(**config_data)
+
+# --- НОВЫЕ КОНФИГУРАЦИИ ДЛЯ CHUNKING ---
+
+class ChunkingRunConfig(BaseModel):
+    name: str = "rag_chunking"
+    seed: int = 42
+
+class ChunkingPathConfig(BaseModel):
+    input_jsonl: str
+    output_dir: str
+
+class ChunkingSettingsConfig(BaseModel):
+    strategy: str = "sentence"
+    chunk_size: int = Field(default=220, ge=50, le=1000)
+    chunk_overlap: int = Field(default=40, ge=0, le=200)
+    max_chunk_tokens: int = Field(default=320, ge=100)
+    tokenizer_model: str = "text-embedding-3-small"
+    embedding_model: str = "text-embedding-3-small"
+    preserve_section_boundaries: bool = True
+    preserve_block_boundaries: bool = True
+
+class ChunkingLoggingConfig(BaseModel):
+    level: str = "INFO"
+    mlflow_enabled: bool = False
+    mlflow_tracking_uri: str = "sqlite:///mlflow.db"
+    mlflow_experiment: str = "rag-chunking"
+
+class ChunkingPipelineConfig(BaseModel):
+    run: ChunkingRunConfig
+    paths: ChunkingPathConfig
+    chunking: ChunkingSettingsConfig
+    logging: ChunkingLoggingConfig
+
+def load_chunking_config(config_path: str = "config/chunking.yaml") -> ChunkingPipelineConfig:
+    with open(config_path, "r", encoding="utf-8") as f:
+        config_data = yaml.safe_load(f)
+    return ChunkingPipelineConfig(**config_data)

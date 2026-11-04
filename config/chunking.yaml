@@ -1,0 +1,25 @@
+run:
+  name: "rag_chunking"
+  seed: 42
+
+paths:
+  # Обратите внимание: в задании указано documents.jsonl, но наш предыдущий пайплайн 
+  # создал dataset.jsonl. Оставим путь к dataset.jsonl, чтобы не переименовывать файлы.
+  input_jsonl: "data/prepared/dataset.jsonl" 
+  output_dir: "data/chunks"
+
+chunking:
+  strategy: "sentence"        # sentence или token
+  chunk_size: 220             # Размер в токенах (рекомендуется 150-300)
+  chunk_overlap: 40           # Перекрытие в токенах (рекомендуется 20-60)
+  max_chunk_tokens: 320       # Максимальный жесткий лимит (рекомендуется 256-320)
+  tokenizer_model: "text-embedding-3-small"
+  embedding_model: "text-embedding-3-small"
+  preserve_section_boundaries: true  # Из презентации (запрет склейки разных секций)
+  preserve_block_boundaries: true    # Из презентации (запрет разрыва списков/таблиц)
+
+logging:
+  level: "INFO"
+  mlflow_enabled: true
+  mlflow_tracking_uri: "sqlite:///mlflow.db"
+  mlflow_experiment: "rag-chunking"

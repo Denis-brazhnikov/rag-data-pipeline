@@ -25,3 +25,15 @@ Production-ready пайплайн для подготовки данных к Re
 1. Установите зависимости:
 ```bash
 pip install -r requirements.txt
+
+## ✂️ Chunking Pipeline (Этап 2)
+
+Проект расширен пайплайном разбиения документов на чанки (Token-Aware & Semantic-Aware).
+
+**Запуск:**
+```bash
+# Запуск через Prefect (по умолчанию)
+python -m src.rag_prep.cli chunk
+
+# Прямой запуск (без Prefect)
+python -m src.rag_prep.cli chunk --no-prefect

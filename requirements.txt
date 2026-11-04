@@ -11,3 +11,4 @@ prefect
 mlflow
 llama-index
 spacy
+tiktoken
