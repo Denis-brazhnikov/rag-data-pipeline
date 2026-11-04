@@ -12,3 +12,4 @@ mlflow
 llama-index
 spacy
 tiktoken
+pytest
