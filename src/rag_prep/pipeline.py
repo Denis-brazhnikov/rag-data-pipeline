@@ -1,5 +1,5 @@
 # --- ИМПОРТЫ ДЛЯ ПАЙПЛАЙНА ПОДГОТОВКИ ДАННЫХ (ЭТАП 1) ---
-from src.rag_prep.config import PipelineConfig, ChunkingPipelineConfig
+from src.rag_prep.config import PipelineConfig, ChunkingPipelineConfig, EmbeddingsPipelineConfig
 from src.rag_prep.stages.loading import LlamaIndexLoadingStage
 from src.rag_prep.stages.parsing import UnstructuredParsingStage
 from src.rag_prep.stages.cleaning import TextCleaningStage
@@ -14,6 +14,14 @@ from src.rag_prep.chunking_stages.loading import PreparedDocumentLoadingStage
 from src.rag_prep.chunking_stages.splitting import ChunkSplittingStage
 from src.rag_prep.chunking_stages.validation import ChunkValidationStage
 from src.rag_prep.chunking_stages.exporting import ChunkExportStage
+
+# --- ИМПОРТЫ ДЛЯ ПАЙПЛАЙНА ЭМБЕДДИНГОВ (ЭТАП 3) ---
+from src.rag_prep.embedding_stages.loading import EmbeddingLoadingStage
+from src.rag_prep.embedding_stages.embedding import TextEmbeddingStage
+from src.rag_prep.embedding_stages.validation import EmbeddingValidationStage
+from src.rag_prep.embedding_stages.metrics import EmbeddingMetricsStage
+from src.rag_prep.embedding_stages.exporting import EmbeddingExportStage
+import uuid
 
 
 class RagPreparationPipeline:
@@ -112,12 +120,52 @@ class RagChunkingPipeline:
         # 4. Export
         manifest = self.exporter.run(valid_chunks, metrics)
         
-        # 5. Tracking (MLflow) - ИСПРАВЛЕНАЯ СТРОКА
+        # 5. Tracking (MLflow)
         tracker = MLflowTracker(self.config)
         manifest_path = f"{self.config.paths.output_dir}/manifest.json"
-        tracker.log_chunking_run(metrics, manifest_path) # <--- Вызываем новый метод
+        tracker.log_chunking_run(metrics, manifest_path)
         
         print("✅ Пайплайн Chunking успешно завершен!")
         return manifest
 
-            
+
+class RagEmbeddingPipeline:
+    """Пайплайн расчета эмбеддингов (Loading -> Embedding -> Validation -> Metrics -> Export)"""
+    
+    def __init__(self, config: EmbeddingsPipelineConfig):
+        self.config = config
+        self.run_id = uuid.uuid4().hex
+        
+        # Инициализация стадий
+        self.loader = EmbeddingLoadingStage(config)
+        self.embedder = TextEmbeddingStage(config, self.run_id)
+        self.validator = EmbeddingValidationStage(config)
+        self.metrics = EmbeddingMetricsStage()
+        self.exporter = EmbeddingExportStage(config)
+
+    def run(self) -> dict:
+        print("🚀 Запуск пайплайна Embeddings...")
+        
+        # 1. Loading
+        chunks = self.loader.run()
+        
+        # 2. Embedding (Считаем векторы батчами)
+        embedded_chunks = self.embedder.run(chunks)
+        
+        # 3. Validation (Проверка на NaN, размерность)
+        valid_embeddings = self.validator.run(embedded_chunks)
+        
+        # 4. Metrics (Сбор статистики)
+        metrics = self.metrics.run(valid_embeddings)
+        
+        # 5. Export (JSON, JSONL, manifest)
+        # Сохраняем возвращаемый манифест
+        manifest = self.exporter.run(valid_embeddings, metrics, self.run_id)
+        
+        # 6. Tracking (MLflow)
+        tracker = MLflowTracker(self.config)
+        manifest_path = f"{self.config.paths.output_dir}/manifest.json"
+        tracker.log_embedding_run(metrics, manifest_path)
+        
+        print("✅ Пайплайн Embeddings успешно завершен!")
+        return manifest # Возвращаем манифест для единообразия

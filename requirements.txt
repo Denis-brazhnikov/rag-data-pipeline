@@ -13,3 +13,6 @@ llama-index
 spacy
 tiktoken
 pytest
+sentence-transformers
+numpy
+tenacity

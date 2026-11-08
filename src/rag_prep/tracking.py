@@ -12,7 +12,7 @@ class MLflowTracker:
             mlflow.set_experiment(self.config.logging.mlflow_experiment)
 
     def log_run(self, counts: dict, manifest_path: str):
-        """Логирование для пайплайна подготовки данных (Старый метод)"""
+        """Логирование для пайплайна подготовки данных"""
         if not self.config.logging.mlflow_enabled:
             return
             
@@ -31,12 +31,11 @@ class MLflowTracker:
             print("📊 Метрики подготовки данных отправлены в MLflow!")
 
     def log_chunking_run(self, metrics: dict, manifest_path: str):
-        """Логирование для пайплайна чанкинга (Новый метод)"""
+        """Логирование для пайплайна чанкинга"""
         if not self.config.logging.mlflow_enabled:
             return
             
         with mlflow.start_run(run_name=self.config.run.name):
-            # Берем параметры из нового конфига чанкинга
             mlflow.log_params({
                 "chunk_size": self.config.chunking.chunk_size,
                 "chunk_overlap": self.config.chunking.chunk_overlap,
@@ -50,3 +49,26 @@ class MLflowTracker:
                 
             mlflow.log_artifact(manifest_path)
             print("📊 Метрики чанкинга отправлены в MLflow!")
+
+    def log_embedding_run(self, metrics: dict, manifest_path: str):
+        """Логирование для пайплайна эмбеддингов"""
+        if not self.config.logging.mlflow_enabled:
+            return
+            
+        with mlflow.start_run(run_name=self.config.run.name):
+            # Добавлены новые параметры из конфига (размерность, лимиты)
+            mlflow.log_params({
+                "embedding_model": self.config.embedding.model,
+                "dimensions": self.config.embedding.dimensions,
+                "batch_size": self.config.embedding.batch_size,
+                "max_input_tokens": self.config.embedding.max_input_tokens,
+                "max_batch_tokens": self.config.embedding.max_batch_tokens,
+                "l2_normalize": self.config.embedding.l2_normalize,
+                "seed": self.config.run.seed
+            })
+            
+            for key, value in metrics.items():
+                mlflow.log_metric(key, value)
+                
+            mlflow.log_artifact(manifest_path)
+            print("📊 Метрики эмбеддингов отправлены в MLflow!")

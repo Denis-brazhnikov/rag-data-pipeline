@@ -102,3 +102,31 @@ def load_chunking_config(config_path: str = "config/chunking.yaml") -> ChunkingP
     with open(config_path, "r", encoding="utf-8") as f:
         config_data = yaml.safe_load(f)
     return ChunkingPipelineConfig(**config_data)
+
+# --- НОВЫЕ КОНФИГУРАЦИИ ДЛЯ EMBEDDINGS ---
+
+class EmbeddingSettingsConfig(BaseModel):
+    provider: str = "sentence-transformers"
+    model: str = "intfloat/multilingual-e5-small"
+    dimensions: int = 384 # Размерность для multilingual-e5-small
+    batch_size: int = 64
+    max_input_tokens: int = 512 # Лимит модели e5-small
+    max_batch_tokens: int = 8192 # Для динамического батчинга
+    l2_normalize: bool = True
+    retry_attempts: int = 3
+    retry_delay: int = 2
+
+class EmbeddingPathConfig(BaseModel):
+    input_jsonl: str
+    output_dir: str
+
+class EmbeddingsPipelineConfig(BaseModel):
+    run: ChunkingRunConfig
+    embedding: EmbeddingSettingsConfig
+    paths: EmbeddingPathConfig
+    logging: ChunkingLoggingConfig
+
+def load_embeddings_config(config_path: str = "config/embeddings.yaml") -> EmbeddingsPipelineConfig:
+    with open(config_path, "r", encoding="utf-8") as f:
+        config_data = yaml.safe_load(f)
+    return EmbeddingsPipelineConfig(**config_data)

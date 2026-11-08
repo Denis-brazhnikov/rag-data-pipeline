@@ -40,7 +40,7 @@ class PreparedDocument(BaseModel):
     text: str
     metadata: DocumentMetadata
 
-    # --- НОВЫЕ МОДЕЛИ ДЛЯ CHUNKING PIPELINE ---
+# --- МОДЕЛИ ДЛЯ CHUNKING PIPELINE ---
 
 class SemanticBlock(BaseModel):
     id: str
@@ -52,7 +52,6 @@ class SemanticBlock(BaseModel):
     origin_element_ids: List[str] = Field(default_factory=list)
 
 class ChunkMetadata(BaseModel):
-    # Обязательные поля из ТЗ
     document_id: str
     position: int
     chunk_token_count: int
@@ -60,18 +59,15 @@ class ChunkMetadata(BaseModel):
     chunk_overlap: int
     chunking_strategy: str
     
-    # Дополнительные поля из ТЗ (Lineage и Tracing)
     source: Optional[str] = None
     section: Optional[str] = None
     text_hash: Optional[str] = None
     parent_ids: List[str] = Field(default_factory=list)
     
-    # Сложные структуры для attribution
     lineage: Dict[str, Any] = Field(default_factory=dict)
     hierarchy: Dict[str, Any] = Field(default_factory=dict)
     quality: Dict[str, Any] = Field(default_factory=dict)
     
-    # Offsets для точного цитирования
     chunk_start_char: int
     chunk_end_char: int
     offset_strategy: str = "semantic_block_span"
@@ -79,3 +75,27 @@ class ChunkMetadata(BaseModel):
 class PreparedChunk(BaseModel):
     text: str
     metadata: ChunkMetadata
+
+# --- МОДЕЛИ ДЛЯ EMBEDDINGS PIPELINE ---
+
+class EmbeddingMetadata(BaseModel):
+    # Обязательные поля из конспекта (Слайд 36)
+    source: str
+    document_id: str
+    model: str
+    dimensions: int
+    embedding_hash: str
+    pipeline_run_id: str
+    created_at: datetime
+    embedding_norm: Optional[float] = None
+    
+    # Поля для сохранения контекста чанка (Lineage)
+    chunk_id: Optional[str] = None
+    text_hash: Optional[str] = None
+    lineage: Dict[str, Any] = Field(default_factory=dict)
+    hierarchy: Dict[str, Any] = Field(default_factory=dict)
+
+class EmbeddedChunk(BaseModel):
+    text: str
+    embedding: List[float]
+    metadata: EmbeddingMetadata

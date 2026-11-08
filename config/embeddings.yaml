@@ -1,0 +1,21 @@
+run:
+  name: "rag_embeddings"
+  seed: 42
+
+embedding:
+  provider: "sentence-transformers" # Локальная модель
+  model: "intfloat/multilingual-e5-small"
+  batch_size: 64
+  l2_normalize: true
+  retry_attempts: 3
+  retry_delay: 2
+
+paths:
+  input_jsonl: "data/chunks/chunks.jsonl"
+  output_dir: "data/embeddings"
+
+logging:
+  level: "INFO"
+  mlflow_enabled: true
+  mlflow_tracking_uri: "sqlite:///mlflow.db"
+  mlflow_experiment: "rag-embeddings"

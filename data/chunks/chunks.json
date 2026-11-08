@@ -7,7 +7,7 @@
       "chunk_token_count": 76,
       "chunk_size": 220,
       "chunk_overlap": 40,
-      "chunking_strategy": "sentence",
+      "chunking_strategy": "semantic_block_packing",
       "source": "C:\\Users\\Emper\\OneDrive\\Рабочий стол\\Учеба\\RAG\\Подготовка данных RAG\\rag-data-pipeline\\data\\raw\\article_1.txt",
       "section": "",
       "text_hash": "83d4d72d5e255bb2124ef02e4151b3b99d63fa0137f8748f67b894b2f20fa20d",
@@ -32,7 +32,11 @@
         "section_depth": 0,
         "document_order": 0
       },
-      "quality": {},
+      "quality": {
+        "token_density": 2.38,
+        "punctuation_ratio": 0.03,
+        "is_low_quality_chunk": false
+      },
       "chunk_start_char": 0,
       "chunk_end_char": 181,
       "offset_strategy": "semantic_block_span"
@@ -46,7 +50,7 @@
       "chunk_token_count": 78,
       "chunk_size": 220,
       "chunk_overlap": 40,
-      "chunking_strategy": "sentence",
+      "chunking_strategy": "semantic_block_packing",
       "source": "C:\\Users\\Emper\\OneDrive\\Рабочий стол\\Учеба\\RAG\\Подготовка данных RAG\\rag-data-pipeline\\data\\raw\\article_1_near_duplicate.txt",
       "section": "",
       "text_hash": "bd765b05b90ea3bf1a08f068e3fc55151007101963bda41cfd12c359e119ee02",
@@ -71,7 +75,11 @@
         "section_depth": 0,
         "document_order": 0
       },
-      "quality": {},
+      "quality": {
+        "token_density": 2.31,
+        "punctuation_ratio": 0.03,
+        "is_low_quality_chunk": false
+      },
       "chunk_start_char": 0,
       "chunk_end_char": 180,
       "offset_strategy": "semantic_block_span"
@@ -85,7 +93,7 @@
       "chunk_token_count": 204,
       "chunk_size": 220,
       "chunk_overlap": 40,
-      "chunking_strategy": "sentence",
+      "chunking_strategy": "semantic_block_packing",
       "source": "C:\\Users\\Emper\\OneDrive\\Рабочий стол\\Учеба\\RAG\\Подготовка данных RAG\\rag-data-pipeline\\data\\raw\\noise.txt",
       "section": "",
       "text_hash": "c094fa857756a81c3b1ae74c1a00cec86dc92defb4b7268ae08553fba1359ab3",
@@ -110,7 +118,11 @@
         "section_depth": 0,
         "document_order": 0
       },
-      "quality": {},
+      "quality": {
+        "token_density": 2.55,
+        "punctuation_ratio": 0.83,
+        "is_low_quality_chunk": true
+      },
       "chunk_start_char": 0,
       "chunk_end_char": 521,
       "offset_strategy": "semantic_block_span"
@@ -124,7 +136,7 @@
       "chunk_token_count": 116,
       "chunk_size": 220,
       "chunk_overlap": 40,
-      "chunking_strategy": "sentence",
+      "chunking_strategy": "semantic_block_packing",
       "source": "C:\\Users\\Emper\\OneDrive\\Рабочий стол\\Учеба\\RAG\\Подготовка данных RAG\\rag-data-pipeline\\data\\raw\\noise.txt",
       "section": "",
       "text_hash": "7a4ae1c5cb9ea6e462a9771fce5d35c9a3d88796c266ddf5e016e06888df1363",
@@ -149,10 +161,14 @@
         "section_depth": 0,
         "document_order": 0
       },
-      "quality": {},
-      "chunk_start_char": 521,
-      "chunk_end_char": 815,
-      "offset_strategy": "estimated_fallback"
+      "quality": {
+        "token_density": 2.53,
+        "punctuation_ratio": 0.83,
+        "is_low_quality_chunk": true
+      },
+      "chunk_start_char": 1,
+      "chunk_end_char": 295,
+      "offset_strategy": "semantic_block_span"
     }
   },
   {
@@ -163,7 +179,7 @@
       "chunk_token_count": 6,
       "chunk_size": 220,
       "chunk_overlap": 40,
-      "chunking_strategy": "sentence",
+      "chunking_strategy": "semantic_block_packing",
       "source": "C:\\Users\\Emper\\OneDrive\\Рабочий стол\\Учеба\\RAG\\Подготовка данных RAG\\rag-data-pipeline\\data\\raw\\notes.md",
       "section": "Заголовок",
       "text_hash": "54c851c4c7212e689f1cdda184b937ea2eb522de44c6b6754d7e2cd15b221474",
@@ -190,7 +206,11 @@
         "section_depth": 1,
         "document_order": 1
       },
-      "quality": {},
+      "quality": {
+        "token_density": 3.67,
+        "punctuation_ratio": 0.05,
+        "is_low_quality_chunk": false
+      },
       "chunk_start_char": 0,
       "chunk_end_char": 22,
       "offset_strategy": "semantic_block_span"
@@ -204,7 +224,7 @@
       "chunk_token_count": 9,
       "chunk_size": 220,
       "chunk_overlap": 40,
-      "chunking_strategy": "sentence",
+      "chunking_strategy": "semantic_block_packing",
       "source": "C:\\Users\\Emper\\OneDrive\\Рабочий стол\\Учеба\\RAG\\Подготовка данных RAG\\rag-data-pipeline\\data\\raw\\notes.md",
       "section": "Заголовок",
       "text_hash": "7f6dd2dc37ff11b96d54df7113c712e96f727110df18d5d1345ebcd27d63091f",
@@ -231,7 +251,11 @@
         "section_depth": 1,
         "document_order": 4
       },
-      "quality": {},
+      "quality": {
+        "token_density": 2.67,
+        "punctuation_ratio": 0.04,
+        "is_low_quality_chunk": false
+      },
       "chunk_start_char": 0,
       "chunk_end_char": 24,
       "offset_strategy": "semantic_block_span"
@@ -245,7 +269,7 @@
       "chunk_token_count": 56,
       "chunk_size": 220,
       "chunk_overlap": 40,
-      "chunking_strategy": "sentence",
+      "chunking_strategy": "semantic_block_packing",
       "source": "C:\\Users\\Emper\\OneDrive\\Рабочий стол\\Учеба\\RAG\\Подготовка данных RAG\\rag-data-pipeline\\data\\raw\\random_article.txt",
       "section": "",
       "text_hash": "e830933b41472652d77e0da6fd211739349067f7e513201eb9b3b39d138b62b1",
@@ -270,7 +294,11 @@
         "section_depth": 0,
         "document_order": 0
       },
-      "quality": {},
+      "quality": {
+        "token_density": 2.38,
+        "punctuation_ratio": 0.04,
+        "is_low_quality_chunk": false
+      },
       "chunk_start_char": 0,
       "chunk_end_char": 133,
       "offset_strategy": "semantic_block_span"
@@ -284,7 +312,7 @@
       "chunk_token_count": 7,
       "chunk_size": 220,
       "chunk_overlap": 40,
-      "chunking_strategy": "sentence",
+      "chunking_strategy": "semantic_block_packing",
       "source": "C:\\Users\\Emper\\OneDrive\\Рабочий стол\\Учеба\\RAG\\Подготовка данных RAG\\rag-data-pipeline\\data\\raw\\web_page_1.html",
       "section": "Заголовок статьи",
       "text_hash": "4a16b8fb6a97423cd580bc0f8160e2f13e29a14f46b4cbcc1b5d1924f36997f1",
@@ -311,7 +339,11 @@
         "section_depth": 1,
         "document_order": 0
       },
-      "quality": {},
+      "quality": {
+        "token_density": 2.29,
+        "punctuation_ratio": 0.0,
+        "is_low_quality_chunk": false
+      },
       "chunk_start_char": 0,
       "chunk_end_char": 16,
       "offset_strategy": "semantic_block_span"
@@ -325,7 +357,7 @@
       "chunk_token_count": 37,
       "chunk_size": 220,
       "chunk_overlap": 40,
-      "chunking_strategy": "sentence",
+      "chunking_strategy": "semantic_block_packing",
       "source": "C:\\Users\\Emper\\OneDrive\\Рабочий стол\\Учеба\\RAG\\Подготовка данных RAG\\rag-data-pipeline\\data\\raw\\web_page_1.html",
       "section": "Заголовок статьи",
       "text_hash": "0ffe7b6aef398447c89b2049f77f86060381a208b8e058199cde0bf154baa7e0",
@@ -352,7 +384,11 @@
         "section_depth": 1,
         "document_order": 1
       },
-      "quality": {},
+      "quality": {
+        "token_density": 2.59,
+        "punctuation_ratio": 0.03,
+        "is_low_quality_chunk": false
+      },
       "chunk_start_char": 0,
       "chunk_end_char": 96,
       "offset_strategy": "semantic_block_span"
@@ -366,7 +402,7 @@
       "chunk_token_count": 6,
       "chunk_size": 220,
       "chunk_overlap": 40,
-      "chunking_strategy": "sentence",
+      "chunking_strategy": "semantic_block_packing",
       "source": "C:\\Users\\Emper\\OneDrive\\Рабочий стол\\Учеба\\RAG\\Подготовка данных RAG\\rag-data-pipeline\\data\\raw\\web_page_2.html",
       "section": "Другая статья",
       "text_hash": "d64645aaed253642beb3b0cbdb84d33db66a8647ebe2b2757c61e4410cc80f61",
@@ -393,7 +429,11 @@
         "section_depth": 1,
         "document_order": 0
       },
-      "quality": {},
+      "quality": {
+        "token_density": 2.17,
+        "punctuation_ratio": 0.0,
+        "is_low_quality_chunk": false
+      },
       "chunk_start_char": 0,
       "chunk_end_char": 13,
       "offset_strategy": "semantic_block_span"
@@ -407,7 +447,7 @@
       "chunk_token_count": 13,
       "chunk_size": 220,
       "chunk_overlap": 40,
-      "chunking_strategy": "sentence",
+      "chunking_strategy": "semantic_block_packing",
       "source": "C:\\Users\\Emper\\OneDrive\\Рабочий стол\\Учеба\\RAG\\Подготовка данных RAG\\rag-data-pipeline\\data\\raw\\web_page_2.html",
       "section": "Другая статья",
       "text_hash": "6d4e7cfe872c85caee536cca053a89378056059ed733bf16cea310e4e50142c6",
@@ -434,7 +474,11 @@
         "section_depth": 1,
         "document_order": 1
       },
-      "quality": {},
+      "quality": {
+        "token_density": 3.23,
+        "punctuation_ratio": 0.02,
+        "is_low_quality_chunk": false
+      },
       "chunk_start_char": 0,
       "chunk_end_char": 42,
       "offset_strategy": "semantic_block_span"
@@ -448,7 +492,7 @@
       "chunk_token_count": 11,
       "chunk_size": 220,
       "chunk_overlap": 40,
-      "chunking_strategy": "sentence",
+      "chunking_strategy": "semantic_block_packing",
       "source": "C:\\Users\\Emper\\OneDrive\\Рабочий стол\\Учеба\\RAG\\Подготовка данных RAG\\rag-data-pipeline\\data\\raw\\web_page_2.html",
       "section": "Другая статья",
       "text_hash": "ac1d69d4619e59926c389d32369d07e547ac2d7ef3c79a60984349c8051a3d51",
@@ -475,7 +519,11 @@
         "section_depth": 1,
         "document_order": 2
       },
-      "quality": {},
+      "quality": {
+        "token_density": 1.73,
+        "punctuation_ratio": 0.05,
+        "is_low_quality_chunk": false
+      },
       "chunk_start_char": 0,
       "chunk_end_char": 19,
       "offset_strategy": "semantic_block_span"
